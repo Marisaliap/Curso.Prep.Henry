@@ -1,0 +1,43 @@
+
+function matriz (n, m) {
+var i= 0; 
+var j= 0; 
+while (i < n){
+while (j < m){
+console.log(i + "," + j);
+j++
+}
+j = 0;
+i++
+}
+}
+
+matriz(2,3)
+
+function TabladelSeis(){
+var TabladelSeis = [];
+  for (var i = 0; i <= 10; i++) {
+var multiplicar = i * 7;
+TabladelSeis.push(multiplicar);
+  } return TabladelSeis;
+}
+TabladelSeis()
+
+var message = "Hola Marisa"; 
+message = message . includes ( "pao") ; 
+
+function Primos(numero) { 
+if (numero === 0 || numero === 1) {
+return false;
+} 
+for (var i = 2; i < numero; i++) {
+if (numero % i === 0) {
+return false;
+} 
+  return true;
+}
+}  
+Primos(39)
+  
+
+
