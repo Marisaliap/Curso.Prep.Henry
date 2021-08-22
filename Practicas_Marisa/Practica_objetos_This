@@ -1,0 +1,95 @@
+var persona = {
+  nombre : "Marisa",
+  saludar : function (){
+console.log("Hola, Marisa");
+},
+  edad : 33,
+};
+  
+  
+   
+persona.saludar()   // invoco el método saludar
+persona["edad"]  // bracket notation
+persona.edad      // dot notation
+persona
+persona.nombre = "Marisa Lia"
+persona.saludar()
+
+var persona1 = {  
+  nombre : "Franco",
+  saludar : function (){
+console.log("Hola, " + this.nombre);
+}, 
+  edad : 56,
+};
+
+persona1.saludar()
+persona1.nombre = "Manuel"  // asigno un nuevo valor a la propiedad nombre y cuando invoco saludar usa ese valor nuevo
+                            // porque en el método utilicé la keyword this que hace referencia al msimo objeto que estoy                             // invocando, en este caso persona1
+persona1.saludar()
+
+function saludar (){
+console.log("Hola, " + this.nombre);
+}
+var manu = {
+  nombre : "Manu",
+  saludar : saludar,
+};
+var martin = {
+  nombre : "Martín",
+  saludar : saludar,
+};
+manu.saludar()
+martin.saludar()
+saludar()  // tira undefined porque no hay un objeto desde el cual lo estoy invocando. PERO... 
+
+var nombre = "Zorro"   // asigno a la variable nombre un valor cualquiera
+saludar()   // Al haber definido la variable nombre con un valor y luego invocar la función saludar sin hacer referencia a un objeto en particular, entonces refiere al OBJETO GLOBAL ... CHAN!
+var luca = {
+  saludar : saludar,
+};
+luca.saludar()   // Si yo creo un objeto que tiene el método saludar pero me ovidé de agregar la propiedad nombre, en este caso al invocar saludar, me da undefined porque el objeto luca no tiene la propiedad nombre definida. 
+
+// La keyword this se usa en objetos y sirve para un método. 
+
+var objeto = {
+  edad: 13,
+  getEdad : function (){
+console.log( this.edad * 2)},
+};
+objeto.getEdad()   // creé un bjeto que tiene un método que multiplica la edad por dos.
+
+function getEdad (){                   
+console.log( objeto.edad * 2)}         
+// Esta función es equivalente a decir ==> objeto.getEdad() objeto.edad reemplaza a this.edad . O sea, this se transforma en el objeto que está invocando esa función
+getEdad()
+objeto.getEdad() // Estoy invocando el método getEdad a través de un dot notation. Como regla memotécnica, aunque no siempre se cumple porque hay excepciones, si getEdad tuviera un this adentro, ese this se va a "transformar" en el objeto que está a la izquierda del punto, o sea el objeto sobre el cual invoqué el método, por ejemplo:
+
+function getEdad (){               // Creo un método getEdad    
+console.log( this.edad * 2)
+}
+
+var objeto1 = {                    // Lo que hago es que este objeto tenga la función getEdad adentro, es decir 
+     edad : 32,                    // estoy compartiendo métodos, pero como la función ya la tengo definida
+  getEdad : getEdad,               // más arriba directamente hago getEdad : getEdad o podría poner sólo getEdad 
+};                                 // xque JS asume que hay una función que se llama igual y quiero ponerla bajo la                                        // propiedad getEdad (como se ve en el ejemplo del objeto2)
+
+  var objeto2 = {
+     edad : 14,
+    getEdad
+};
+
+getEdad()   // Me dará undefined porque this.edad no existe (this.edad es undefined entonces this.edad * 2 is NAN)
+objeto1.getEdad() // pero si invoco objeto1 y el método getEdad, entonces el this se va a "transformar" en objeto1 (el this que está dentro del método getEdad va a referenciar al objeto desde el cual se lo invoca, en este caso, objeto1)
+objeto2.getEdad() // Y cuando lo invoco desde objeto2, el this se "convierte" en objeto2 y me devuelve la edad 14 * 2. Porque el método, el punto y el objeto desde el cual lo estoy invocando se va a "transformar" en el this. 
+
+
+
+
+
+
+
+
+
+
+

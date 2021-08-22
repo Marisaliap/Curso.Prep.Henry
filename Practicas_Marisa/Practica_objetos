@@ -1,0 +1,45 @@
+var alumnos = [
+  { nombre : "Emi",
+   edad : 23,
+   hobbies : ["correr", "dormir", "nadar"],
+   amigos : [
+     {
+       nombre: "Martín",
+     },
+      {
+       nombre: "Leo",
+     }
+   ],
+},
+{ nombre : "Franco",
+   edad : 21,
+   hobbies : ["fútbol", "golf"],
+   amigos : [
+     {
+       nombre: "Emi",
+     },
+      {
+       nombre: "Jimmy",
+     },
+      {
+       nombre: "Matías",
+     }
+   ],
+},   
+];
+
+alumnos[0]["hobbies"][1]  // acceder al segundo hobby de Emi, que es dormir
+alumnos[1]["amigos"][1]  // acceder a Jimmy amigo de Franco
+alumnos[1]["hobbies"][0] // acceder al hobby fútbol de Franco
+alumnos[0].edad          // accedo a la edad de Emi con dot notation
+alumnos[1].hobbies       // me devuelve un array con hobbies
+alumnos[1].amigos        // me devuelve un array de objetos que son amigos de Franco
+alumnos[1].amigos.push({ nombre : "Teresa" }) // agrega un nuevo objeto al final del array de amigos
+alumnos[1].amigos[5] = { nombre : "Carlos" } // agrega un nuevo objeto en el orden 5 del array de amigos
+alumnos[0].hobbies.push("montañismo") // pushea un nuevo hobbie al alumno Emi
+alumnos[2] = { nombre : "Eva", edad : 45, hobbies : ["cantar"], amigos : [ {nombre : "Sebas"}, { nombre : "Ana"}]}
+delete alumnos[1].amigos[4]
+alumnos[1].amigos[4] = alumnos[1].amigos[5]
+alumnos
+alumnos[1].amigos[5] = { nombre : "Vani" }
+alumnos.length

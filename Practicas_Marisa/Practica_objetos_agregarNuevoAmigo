@@ -1,0 +1,25 @@
+
+var manu = {
+  nombre : "Manu",
+  password : "manu123",
+};
+var martin = {
+  amigos : [{
+nombre : "Leti",
+    edad: 20,
+  }
+  ],
+};
+
+manu.password
+nuevoAmigo = { nombre: "Vane", edad : 23 };
+
+martin.amigos.push(nuevoAmigo)
+martin
+
+
+
+
+
+
+
