@@ -1,0 +1,165 @@
+//CALLBACKS - CB
+
+// JS es un lenguaje que trata a las funciones como first-class. Eso significa que las funciones se pueden pasar como argumentos a otras funciones, retornarlas como resultado de una función y guardarlas en variables u otras estructuras de datos. Cuando pasamos una función como argumento a otra función, hay una conveción que así como cuando una función está dentro de un objeto le llamamos método, cuando una función se pasa como argumento de otra función, le llamamos callback - cb. 
+
+function decirHolaUsuario (usuario) {
+  return "Hola " + usuario + "!";
+};
+
+function decirAdiosUsuario (usuario) {
+  return "Adiós " + usuario + "!";
+};
+
+function crearSaludo (usuario, cb) {
+  return cb(usuario);
+};
+
+crearSaludo("Dan", decirHolaUsuario);
+crearSaludo("Dan", decirAdiosUsuario);  // Cuando paso una función como argumento de otra función (como callback) la tengo que pasar 
+                                        // sin invocar ==> decirAdiosUsuario es OK, ==> decirAdiosUsuario() - no lo es.
+crearSaludo("Marisa", decirHolaUsuario)
+
+//function crearSaludo (usuario, cb)     === EQUIVALE A =>       function crearSaludo (usuario, function saludar (parametro) {  
+//{return cb(usuario); }                                         return "Hola " + parametro;} );
+
+crearSaludo ("Ana" , function saludar (parametro) {return "Hola " + parametro;});
+
+                                                    //ARREGLOS Y FUNCIONES CON CALLBACKS
+//IMAGINEMOS QUE QUEREMOS INVOCAR UNA FUNCIÓN EN TODOS LOS ELEMENTOS DE UN ARREGLO - 
+
+//VEAMOS QUE HACE EL METODO FOREACH (no devuelve nada)
+
+var alumnos = ["Fede", "Mati", "Sofi", "Ana", "Lucho"];
+// sin callbacks
+for (var i= 0; i< alumnos.length; i++){              // recorremos el array con un bucle for. Esa forma se llama imperativa xque
+console.log(alumnos[i])};                            //estamos escribiendo puntualmente qué es lo que tiene que hacer
+// con callbacks
+alumnos.forEach (function (elemento, indice) {       //Uso forEach cuando quiero que se ejecute una función para c/u de los 
+console.log(elemento);});                            //elementos de un array. Esto hizo lo mismo que el bucle for pero de una manera distinta. Esta forma de hacerlo se llama declarativa, nosotros no le indicamos cómo tiene que hacerlo. ForEach recorre un array pero no tiene que retornar nada.
+
+// METODO MAP (devuelve un nuevo arreglo)
+
+var numbers = [1, 5, 10, 15];                        // Tengo un arreglo de números y quiero un arreglo nuevo donde estén todos 
+var doubles = numbers.map(function(x) {              // los números multiplicados por dos. Map tiene que retornar algo, siempre 
+   return x * 2;                                     // retorna lo que le indiquemos en un arreglo nuevo
+});
+doubles
+
+
+//DE MINÚSCULAS A MAYÚSCULAS CON MAP
+//AHORA QUIERO CREAR UN NUEVO ARREGLO CON LOS NOMBRES DE LOS ALUMNOS INICIALIZADOS EN MAYÚSCULAS 
+
+var alumnosOtro = ["fede", "mati", "sofi", "ana", "kucho", "eze", "vane"];
+
+String.prototype.capitalize = function () {
+  return this.charAt(0).toUpperCase() + this.slice(1)
+};
+// con callbacks
+var alumnosNuevo = alumnosOtro.map( function (elemento, indice) {
+return elemento.capitalize();
+})
+alumnosNuevo  //me devuelve el nuevo array con los nombres iniciando en mayúsculas
+alumnosOtro   // conserva el array original 
+//sin callbacks
+var nuevoArray = [];
+for (var i= 0; i < alumnosOtro.length; i++) {
+nuevoArray.push (alumnosOtro[i].capitalize());
+}
+nuevoArray  // hace lo mismo que con la función map, devuelve un array con los nombres iniciados en mayúsculas
+
+//EJEMPLOS DE CÓMO FUNCIONA EL METODO MAP
+
+var nuevoArray = [10, 25, 31, 56].map (function (elemento, indice) {
+    return (elemento * 2);
+  });  
+nuevoArray //me devuelve un nuevo array con los elementos multiplicados por dos.
+
+var nuevoArray = [10, 25, 31, 56].map (function (elemento, indice) {
+    return (indice);
+  }); 
+nuevoArray  // muestra el nuevo array con el indice de cada elemento
+
+
+// METODO REDUCE
+// El método reduce() ejecuta una función reductora sobre cada elemento de un array, devolviendo como resultado un único valor.
+//Sintaxis: arr.reduce(callback(acumulador, valorActual[, índice[, array]])[, valorInicial])
+var array1 = [1, 2, 3, 4];
+var reducer = (accumulator, currentValue) => accumulator + currentValue;
+console.log(array1.reduce(reducer));
+console.log(array1.reduce(reducer, 5));   // REDUCE DEVUELVE UN ÚNICO VALOR
+
+var nums = [1, 2, 3, 4, 5, 6, 7];
+
+//sin callbacks
+function sumarTodo (){
+var suma = 0;
+for (var i=0; i< nums.length; i++) {
+suma = suma + nums[i];
+} return suma;
+}
+sumarTodo()
+//con callbacks
+var sumaReduce = nums.reduce(function (acc, el) {
+return acc + el}, 0);                    // no es obligatorio poner el cero, es el valor con el que el acumulador va a empezar;
+sumaReduce                               // si no se pone nada por defecto es cero. 
+// acumulador = 0;
+// return 0 (acumulador) + 1 (el primer elemento que es 1 en este caso)==> acumulador (lo guarda en el acc y empieza de nuevo)
+// acc = 1 (porque ahora el acumulador vale 1)
+// return 1 + 2 (porque 2 es el segundo elemento del array en este ejemplo)
+// acc = 3 (ahora el acumulador vale 3, y así sigue)
+// o sea que lo que retorna, va a pasar a ser el acumulador de la siguiente función. Cuando llega al final retorna el acumulador
+
+var sumaRed = nums.reduce(function (acc, el) {
+return el},);                                // si yo le digo que me retorne sólo el elemento, me retorna 7 xque siempre retorna el 
+sumaRed                                      // acumulador, entonces empieza en contador 0, elemento 1, entonces el contador es 1; pasa al siguiente y el elemento es 2, entonces acumulador/contador es 2, pasa al siguiente elemento que es 3 y entonces contador es 3, y así hasta llegar a 7 que es último elemento y el contador es 7, retorna el contador.
+
+// PUEDO USAR CONTADOR PARA MULTIPLICAR TODOS LOS NÚMEROS, PERO DEBO CAMBIAR EL VALOR DEL ACUMULADOR A 1 PORQUE 1 ES EL VALOR NEUTRO EN LA MULTIPLICACIÓN ( si lo dejo en 0 todo número multiplicado por cero es cero), entonces: 
+
+var multiplicaTodos = nums.reduce (function (acc, el) {
+return acc * el } , 1);               // multplico acc * el entonces cambio el valor del acumulador a 1 que es neutro en la multipl.
+multiplicaTodos                       // me devuelve el resultado de multiplicador todos los elementos entre si
+
+
+// METODO FILTER
+
+//El método filter() crea un nuevo array con todos los elementos que cumplan la condición implementada por la función dada.
+// Sintaxis: 
+// var newArray = arr.filter(callback(currentValue[, index[, array]])[, thisArg])
+//Devuelve un nuevo array con los elementos que cumplen la condición. Si ningún elemento cumple la condición, se devolverá un array vacío.
+
+var palabras = ['spray', 'límite', 'elite', 'exuberante', 'destrucción', 'presente'];
+
+var resultado = palabras.filter(palabras => palabras.length > 6);  //filtra palabras de más de 6 letras
+console.log(resultado);
+
+var result = palabras.filter(palabras => palabras[0] === "e");   //filtra palabras que empiezan con "e"
+console.log(result);
+
+//El siguiente ejemplo usa filter() para crear un array filtrado que excluye todos los elementos con valores inferiores a 10.
+
+function esSuficientementeGrande(elemento) {
+  return elemento >= 10;
+}
+var filtrados = [12, 5, 8, 130, 44].filter(esSuficientementeGrande);
+filtrados
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

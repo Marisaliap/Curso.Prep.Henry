@@ -1,0 +1,75 @@
+//CALLBACKS - CB
+
+// JS es un lenguaje que trata a las funciones como first-class. Eso significa que las funciones se pueden pasar como argumentos a otras funciones, retornarlas como resultado de una función y guardarlas en variables u otras estructuras de datos. Cuando pasamos una función como argumento a otra función, hay una conveción que así como cuando una función está dentro de un objeto le llamamos método, cuando una función se pasa como argumento de otra función, le llamamos callback - cb. 
+
+function sumaDos (elemento) {
+  return elemento + 2;
+};
+
+function restaDos (elemento) {
+  return elemento - 2;
+};
+
+function multiplicados (elemento) { 
+return elemento * elemento;
+};
+
+function divididos (elemento) { 
+return elemento / 5;
+};
+
+function crearCuentas (elemento, cb) {
+  return cb(elemento);
+};
+
+crearCuentas(14, sumaDos);
+crearCuentas(30, restaDos);  
+crearCuentas(5, multiplicados);
+crearCuentas(40, divididos);
+
+
+crearCuentas (3 , function alCuadrado (parametro) {return parametro * parametro;});
+
+// EJERCICIO: Crea un nuevo array
+// Itera sobre cada valor en "array", pásalo a `cb` y luego ubicar el valor devuelto por `cb` en un nuevo array
+// El nuevo array debe tener la misma longitud que el array del argumento
+//Tu código:
+
+function map(array, cb) {
+var nuevoArray = array.map (function (elemento, indice) {
+    return cb(elemento);
+  });
+    return nuevoArray;
+}
+
+//AHORA UTILIZO LA FUNCION MAP CON OTROS ARREGLOS Y LE PASO LA FUNCIÓN MULTIPLICADOS, DIVIDIDOS, SUMADOS Y RESTADOS PERO COMO CALLBACK. Es decir, le paso a la función map dos parámetros: un array de números y otra función como parámetro.
+
+map([1, 2, 3, 4, 5], multiplicados)
+map([10, 20, 32, 40, 5], divididos)
+map([11, 28, 3, 4, 5], sumaDos)
+map([1, 2, 35, 4, 51], restaDos) 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
