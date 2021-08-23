@@ -1,0 +1,237 @@
+// CLASES;
+// voy a crear una plantilla Persona:
+function Persona (){
+this.nombre = "Juan";
+  this.apellido = "Pérez";
+}
+// Una función constructora tiene la particularidad de que no retorna nada, y de que usa la keyword this y no sabemos por ahora cómo funciona (lo veremos más adelante) Por convención, está establecido que todas las funciones constructoras de clases empiezan con mayúsculas. Ahora voy a crear una instancia juan de la clase Persona usando la función constructora de clases. 
+
+// Para instanciar un nuevo objeto/instancia voy a usar la keyword new, de esta forma:
+var juan = new Persona();
+
+//Cuando hago console.log me muestra cómo fue construído ese objeto/instancia juan ( se puede ver que dice Persona al principio, (indicando que es un objeto creado con la función constructora Persona) y al final agrega  __proto__: { constructor: ƒ Persona()) 
+juan
+// Ahora voy a crear un objeto literal juan2 (sin usar la función constructora de clases) 
+var juan2 = {
+nombre : "Juan",
+apellido: "Pérez",
+};
+// y cuando hago console.log no me muestra cómo fue construído ese objeto juan2 porque es un objeto literal. Esta es una forma de saber cómo ha sido construído un objeto, si es literal o no.
+juan2
+
+//Alguien podría decir que con la clase Persona sólo estamos construyendo instancias que tienen como nombre Juan y como apellido Pérez. Sin embargo, como Persona es una función podemos usar todo lo que sabemos sobre las funciones, así que una función puede recibir argumentos, por ejemplo, creo la función constructora de clase Car y le paso los argumentos marca, cilindrada y color:
+
+function Car (marca, tipo, cv, color){
+this.marca = marca;
+  this.tipo = tipo;
+  this.cv = cv;
+  this.color = color
+}
+// Ahora creo una instancia meriva con la función constructora Car.
+ var meriva = new Car("Chevrolet", "Meriva", 1.8, "gris");
+meriva
+// Podemos ver que this.marca = marca es igual a marca que está pasada a la función por argumento, así como this.cv = cilindrada hace referencia a cilindrada que se pasa por argumento. 
+function Car1 (marca, tipo, cilindrada, color){
+this.marca = marca;
+  this.tipo = tipo;
+  this.cv = cilindrada;
+  this.color = color
+}
+
+var c5 = new Car1 ("Citroen", "C5", 1500, "rojo");
+c5
+// Ahora veamos por qué la función constructora no retorna nada y qué función cumple el keyword this. Para ello vamos a ver qué hace el keyword new porque hace algunas cosas detrás de escena... 
+//Básicamente, el keyword new detás de escena:
+// Paso 1) crea un objeto vacío ==> var objetox = {}; 
+// Paso 2) invoca la función en este caso Car, con los datos que nosotros hemos usado y de ahí hace una cosa que vamos a aprender a hacer que es "bindear" con el objetox (el objeto del paso 1) que era un objeto vacío:
+// ==> Car ("Chevrolet", "Meriva", 1.8, "gris").bind(objetox) 
+// Cuando yo uso bindear esta función lo que hace es darnos un control a los desarrolladores sobre qué es lo que va a valer la clave this. Básicamente con bind estoy diciendo "el this de la función Car tiene que ser objetox que es lo que estoy pasando al decir var objetox o var meriva = " Básicamente le estoy diciendo que el this de esta función sea este objeto. 
+// Paso 3) Finalmente lo que hace keyword new es retornar el objetox ==> return objetox;
+// Todo eso ocurre detrás de escena, por eso el lenguaje JS en este caso nos oculta una cierta complejidad. Y es importante saber lo que está sucediendo detrás de escena porque eso nos explica por qué funciona this en la función constructora y por qué no retorna nada, es debido a estas cosas que hace la keyword new sin que nosotros nos demos cuenta. 
+
+//LA FABRICA DE OBJETOS Persona1 que hice de ejemplo recibe los datos por parámetro:
+
+function Persona1 (nombre, apellido) {
+this.nombre = nombre || "Juan" ;     // default operator 
+this.apellido = apellido || "Pérez" ; 
+};
+var marisa = new Persona1("Marisa", "Pascal");
+var eneas = new Persona1("Eneas", "Pascal");
+var magda = new Persona1("Magdalena", "Gallol");
+var oscar = new Persona1();
+ 
+marisa
+eneas
+magda
+oscar  // como no le pasé argumentos al crear el objeto oscar, tomará los valores definidos por defectos dentro de la función constructora 
+// Como estamos invocando una función, podemos usar dentro TODO lo que sabemos de funciones. Y también usar los objetos creados a partir de ella igual que los objetos literales, por ejemplo:
+marisa.nombre // me deuelve Marisa
+meriva.cv // me devuelve 1.8
+c5.marca // me devuelve citroen
+eneas.segundoapellido = "Ceballos";  // le puedo agregar más propiedades
+meriva.funciona = true;  // le agrego una nueva propiedad al objeto meriva
+magda.apellido = "Gayol"  // piso el valor de la propiedad apellido asignándole un nuevo valor
+
+// default operator agrega un valor por defecto en el caso de que no se le pasen por argumento o bien que sea null, por ejemplo:
+
+function Car2 (marca, cv, color) {
+this.marca = marca || "Ford";
+this.cv = cv || 1.8;
+this.color = color || "blanco";}
+var ford = new Car2()  // creará un objeto con todos los valores asignados por defecto dentro de la f. constructora.
+var audi = new Car2("Audi", null, "negro") // crea un objeto audi marca Audi color negro y con cv por defecto porque le pasé null                                                // como segundo argumento.
+
+// Recordemos cómo funciona el default operator repasando la tabla de la verdad:
+// TRUE || TRUE ==> TRUE
+// TRUE || FALSE ==> TRUE
+// FALSE || TRUE ==> TRUE
+// FALSE || FALSE ==> FALSE
+"cualquier stream" || true;  // me devuelve "cualquierstream" porque todos los streams son true excepto un stream vacío
+"cualquier stream" || false;   // me devuelve "cualquier stream" por la misma razón anterior
+false || "cualquier stream";  // me devuelve "cualquier stream" xque si el primer valor es falso, evalúa el segundo valor que es true
+true || "cualquier stream";   // me devuelve true porque el primer valor es true, y el valor buleano true es true
+false || "";                  // devuelve un stream vacío que es un valor forzado a falso.
+false || null;                // devuelve null por la misma razón anterior
+false || 0;                   // devuelve 0 que en JS es forzado a ser falso.
+
+// SHORTCIRCUIT
+
+// TRUE && TRUE ==> TRUE
+// TRUE && FALSE ==> TRUE
+// FALSE && TRUE ==> TRUE
+// FALSE && FALSE ==> FALSE
+"cualquier stream" && true;  // devuelve true porque un stream es verdadero y true es verdadero (si a es true define b)
+"cualquier stream" && false;   // devuelve falso porque si el primer el. es true, define el segundo el. que es el buleano false 
+false && "cualquier stream";  // devuelve falso porque el 1er. el. es el buleano false entonces define ese ele., no pasa al 2do. el.
+true && "cualquier stream";   // devuelve "cualquier stream" porque el primer el. es true entonces pasa al 2do. y como también es                                   // true, define ese el. 
+false && "";                  // devuelve falso porque el 1er elemento es falso, ni siquiera pasa al segundo (false && false = false)
+false && null;                // devuelve falso por la razón anterior.
+false && 0;                   // devuelve falso por la misma razón.
+
+// Entonces shortcircuit es un operador de control porque si el primer elemento es falso, el resto no lo evalúa. Y cúando lo usaríamos? el or lo vamos a usar en los constructores; y luego usaremos AND - && en muchos lugares como operadores de control, por ejemlo si queremos saber si existe un objeto y en ese caso, si tiene una determinada propiedad, por ejemplo:
+meriva && meriva.color        // me devuelve "gris" porque existe el objeto meriva y tiene una propiedad color que tiene el valor                                   // gris adentro
+meriva && meriva.kilometraje  // me tira  un error porque no existe la propiedad kilometraje dentro del objeto meriva
+// peugeot                       // devuelve undefined porque no existe la instancia peugeot
+// peugeot.color                 // devuelve un error del tipo : Cannot read property "color" of undefined
+// peugeot && peugeot.color      // me devuelve un error: ReferenceError: peugeot is not defined porque el objeto peugeot no está                                     // definido, ni siquiera evalúa si existe la propiedad peugeot.color
+// COMO PROGRAMADORES QUEREMOS QUE EL CÓDIGO NO NOS TIRE ERRORES PORQUE ENTONCES SE PARA TODO. Una cosa es algo undefined y otra cosa es un error porque allí se detiene todo lo demás. 
+
+//PROTOTYPE
+
+// Todos los objetos en JS tienen una referencia a otro objeto llamado proto. Por eso decimos que JS es un lenguaje de prototipado.
+//Ejemplo:
+meriva.__proto__     // devuelve Car {}    
+"string".__proto__   // devuelve [String: ""] 
+
+// NUNCA CAMBIAMOS NADA EN JS CUANDO ENCONTRAMOS UNA PROPIEDAD QUE TIENE GUIONES DOBLES porque significa que no lo tenemos que tocar por una convención de JS.
+
+// Como en JS todo es un objeto o "primtivas", todo tiene su prototipo:
+
+// [].__proto__  devuelve en la consola del navegador ==> Array [] (Me informa que el prototipo de este array es un objeto que se llama Array. Podemos usar los métodos de un array como array.push o array.push porque están definidas en un prototipo que se llama Array.
+"string".__proto__ // devuelve en la consola del navegador ==> String { "" } que quiere decir que el prototipo de cualquier string es un objeto que se llama String , y es donde están definidos los métodos que podemos aplicar a un string, como string.length
+var objeto = {};  // creo un objeto vacío y luego quiero ver su prototipo...
+objeto.__proto__ // me devuelve en la consola del navegador ==> Object { … } que me dice que el prototipo de cualquier objeto es un objeto llamado Object que es único que no tiene prototipo, es como el prototipo máximo o el "objeto alpha" y en esos tres puntitos entre las llaves están definidos todos los métodos que se utilizan.
+
+// Con todo esto decimos que, cada objeto que nosotros creamos le atribuímos ciertas propiedades, propiedad1, propiedad2, pero a su vez tiene definido un proto que puede contener cualquier otra propiedad. Cuando yo busco una propiedad que no está en el objeto (eso se llama prototypal chain - cadena de prototipado), JS lo que hace es buscar esa propiedad en el prototipo. Si esa propiedad no está en el prototipo, tira un error. Si está, la usa. Cuando yo uso array.push, cómo sabe qué hace ese método si yo no lo definí dentro del array? es porque está definido dentro del prototipo array. Cuando yo escribo lista. (lista y un punto) en la consola del navegador me abre un montón de funciones distintas. Todas esas funciones están en el constructor. Por ejemplo el .bind también está en el prototipo de las funciones. 
+
+//LAS FUNCIONES CONSTRUCTORAS PARA QUÉ ME SIRVEN?  Para lo que más me sirven es para compartir métodos (funciones), porque podemos hacer que en prototipo de esos objetos compartan una misma función (en lugar de crear objetos donde tengo que repetir el mismo método una y otra vez).  Por ejemplo:
+
+function Persona4 (edad) {
+this.edad = edad;
+};
+
+var obj1 = new Persona4(23)
+
+var obj2 = new Persona4(14)
+
+var obj3 = new Persona4(34)
+
+function getEdad() {
+return this.edad;
+}
+//Ahora si yo quiero que todos los objetos creados con la función constructora Persona4 tengan la función getEdad, entonces escribo lo siguiente:
+
+Persona4.prototype.getEdad = function () {   // Defino una propiedad (en este caso un método) del prototipo Persona4 que se llama     
+return this.edad;                            // // getEdad
+};
+obj1.getEdad()                               //Ahora cada uno de los objetos creados tiene el método getEdad que le asignamos por                                                  //prototipo. Es decir, el objeto que yo creé tiene sólo la propiedad edad, pero no tiene la propiedad getEdad, entonces como no la encuentra dentro del objeto, JS  la va a buscar en su prototipo, y este si la tiene, así que la invoca y la trae. Ahora cobra más importancia el keyword this, porque para compartir esta función es súper importante el keyword this se va referir a cada objeto que yo estoy instanciando con esa propiedad/método. 
+
+//Ahora puedo querer asignar algo diferente al objeto 3, por ejemplo:
+obj3.getEdad = function () {return this.edad / 2};  // le asigno a obj3 una función que divide la edad de obj3 por 2
+obj3.getEdad()                                      // Ahora me devuelve 17 que es la mitad de la edad del obj3
+obj1.getEdad()                                      // sigue igual que antes
+// Entonces esto me permite sobre-escribir las propiedades que tiene cada objeto. Porque si un objeto no tiene la propiedad getEdad, la va a buscar al prototipo. Pero si la tiene, directamente invoca la que está dentro de ese objeto.
+
+Persona4.prototype.getEdad = function () {   // Ahora quiero cambiar lo que hace la función getEdad dentro de cada objeto  
+return "Tiene: " + this.edad + " años";                            
+};
+obj2.getEdad()                               // devuelve 'Tiene: 14 años'
+obj1.getEdad()
+obj3.getEdad()                                // En este caso devuelve 17 años porque invoca la propiedad getEdad dentro del obj3
+
+//Ahora la keyword new hace algo así:
+// Paso 1) crea un objeto vacío var obj4 = {};
+// Paso 2) retorna Persona4(edad).bind(obj4);
+// Paso 3) obj4__proto__ = Persona4.prototype;
+
+//En realidad con la expresión "Persona4.prototype.getEdad = etc..." no estoy tocando el prototipo Persona4, sino que le estoy creando funciones que van a estar dentro del prototipo. De hecho puedo acceder a las propiedades del prototipo escribiendo en la consola; Persona4.__proto__ 
+
+// TODO LO QUE SEAN PROPIEDADES DEL OBJETO QUE QUEREMOS CONSTRUIR VA EN EL CONSTRUCTOR, POR EJ.;
+
+function Alumno (nombre, apellido ){
+  this.nombre = nombre || "Juan";
+    this.apellido = apellido || "de los Palotes";
+};
+
+// TODO LO QUE SEAN METODOS DEL OBJETO QUE QUEREMOS CONSTRUIR VA EN EL PROTOTYPE, POR EJ.:
+
+Alumno.prototype.saludar = function (){
+return "Bienvenid@ " + this.nombre + " " + this.apellido + "!";
+}
+
+// SI O SI VAMOS A USAR LA VARIABLE THIS PORQUE AHORA NO SABEMOS CÚAL ES EL OBJETO QUE ESTÁS CREANDO ENTONCES NECESITAMOS USAR UNA REFERENCIA RELATIVA. 
+
+var marisa = new Alumno("Marisa", null);
+var eneas = new Alumno ("Eneas", "Ceballos")
+marisa
+eneas.saludar()
+marisa.saludar()
+
+// ES6 (ECMASCRIPT) y CLASES (CLASS)
+//Es otra forma de crear objetos - prácticamente una copia de Phyton y Java - te hace creer que JS está orientado a objetos cuando no es así:
+
+// class Persona5 {
+// constructor (nombre, apellido) {
+// this.nombre = nombre,
+// this.apellido = apellido,
+// }
+// saludar () {
+// console.log ("Hola " + this.nombre);
+// }
+// };
+
+// var toni = new Persona5 ("Toni", "Tralice");
+// toni.saludar();
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
