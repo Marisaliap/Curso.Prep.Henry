@@ -1,0 +1,177 @@
+
+objeto = {
+      D: 1,
+      B: 2,
+      C: 3
+    };
+function deObjetoAmatriz(objeto){
+  // Escribe una función que convierta un objeto en una matriz, donde cada elemento representa 
+  // un par clave-valor en forma de matriz.
+  //Ejemplo: 
+  /*objeto({
+      D: 1,
+      B: 2,
+      C: 3
+    }) ➞ [["D", 1], ["B", 2], ["C", 3]]*/
+  //Escribe tu código aquí
+array = [];
+for (var prop in objeto) {
+array.push([prop, objeto[prop]]);
+}
+  return array;
+}
+
+deObjetoAmatriz(objeto)
+
+//O bien utilizando el método Object.entries
+
+Object.entries(objeto);
+
+//==============================================================================================================================
+
+function numberOfCharacters(string) {
+  //La función recibe un string. Recorre el srting y devuelve el caracter con el número de veces que aparece 
+  //en formato par clave-valor.
+  //Ej: Recibe ---> "adsjfdsfsfjsdjfhacabcsbajda" || Devuelve ---> { a: 5, b: 2, c: 2, d: 4, f: 4, h:1, j: 4, s: 5 } 
+  //Escribe tu código aquí
+var obj = {};
+  for (var i = 0; i < string.length; i++) {
+    var count = 0;
+     if (!obj[string[i]])  {                 //le estoy indicando si no tiene eso, pase al siguiente bucle for
+        for (var j = 0; j < string.length; j++){
+          if (string[i] === string[j]) {
+            count ++;
+          }
+        }
+        obj[string[i]] = count; 
+    }
+  }
+  return obj;
+}
+numberOfCharacters("adsjfdsfsfjsdjfhacabcsbajda")
+
+//Otra forma
+function cantidadLetras(string) {
+objeto = {};
+  for (let i = 0; i < string.length; i++) {
+    if (Object.keys(objeto).includes(string[i])) {
+      objeto[string[i]] = objeto[string[i]] + 1;
+    } else {
+      objeto[string[i]] = 1;
+    }
+  }
+  return objeto;
+}
+cantidadLetras("adsjfdsfsfjsdjfhacabcsbajda")
+
+//Otra forma
+function cantidadLet(string) {
+var obj = {};
+  for (var i = 0; i < string.length; i++) {
+    if (!obj[string[i]]) {
+      obj[string[i]] = 0;
+    } obj[string[i]] = obj[string[i]] + 1;
+  }
+    return obj;
+}
+cantidadLet("marisaliapascal")
+
+//La forma más corta con un bucle for in
+function cantLet(string) {
+var obj = {};
+  for (var str in string) {
+obj[string[str]] = (obj[string[str]] || 0 ) + 1; 
+} return obj;
+}
+
+cantLet("eneasaugustoceballoszúñigapascal")
+
+//==============================================================================================================================
+
+function capToFront(s) {
+  //Realiza una función que reciba como parámetro un string y mueva todas las letras mayúsculas
+  //al principio de la palabra.
+  //Ejemplo: soyHENRY -> HENRYsoy
+  //Escribe tu código aquí
+var may = "";
+  var min = "";
+  
+   for (var i = 0; i< s.length; i++) {
+
+      if (s[i] === s[i].toUpperCase()) {
+       may = may + s[i];
+       } else {
+       min = min + s[i];
+  }
+   }
+  return may + min;
+}
+
+capToFront("soyHENRY")
+
+//==============================================================================================================================
+
+function asAmirror(str) {
+  //La función recibe una frase. 
+  //Escribe una función que tome la frase recibida y la devuelva de modo tal que se pueda leer de izquierda a derecha 
+  //pero con cada una de sus palabras invertidas, como si fuera un espejo.
+  //Ej: Recibe ---> "The Henry Challenge is close!" || Devuelve ---> "ehT yrneH egnellahC si !esolc"
+  //Escribe tu código aquí
+  var fraseEspejo = str.split(" ").map(function (palabra) {
+    return palabra.split("").reverse().join("");
+  }) .join (" ");
+  return fraseEspejo;
+} 
+
+asAmirror("Every day in every way I am feeling happy and happy, yes!")
+asAmirror("The Henry Challenge is close!")
+
+str = "";
+function espejo (str) {
+var frase = str.split(" ").map(function (palabra) {
+return palabra.split("").reverse().join("");
+}).join(" ");
+return frase;
+}
+
+espejo("Gallina tiene huevos")
+
+//Otra forma:
+
+function comoEspejo (str) {
+var arrayInvertido = [];                          //Creamos un array donde pondremos la frase resultante
+var arrayPalabras = str.split(" ");              //Otro array donde pondremos las palabras y empiezo a utilizar los métodos, acá utilizamos el split, que lo que hace es separarme lo que yo desee dentro del string, o sea va a separar cada palabra de la frase en distintos strings
+
+  for (var i = 0; i< arrayPalabras.length; i++) {  //hacemos un for que verifica el array de palabras que acabamos de definir
+    var arrayLetra = arrayPalabras[i].split("");   // Creamos un nuevo array de letras, que tome las palabras en la primera posición y lo que va a hacer en esa posición es otro split que lo que haga es separar las letras una por una, ["T", "h", "e"]. Entonces lo siguiente que tenemos que hacer es invertirlas, por eso creamos un array de letras invertidas =>
+    var arrayLetraInvertida = arrayLetra.reverse();  // que toma las letras del array anterior y las invierte con reverse(). No hace falta que le pase ningún parámetro porque lo que hace reverse es tomar todos los elementos y darlos vuelta. Ahora lo que tengo que hacer es pushear las letras invertidas dentro del array vacío que creé arriba, y volver a unirlas para que se forme la palabra completa. Usamos join("") con un array vacío porque no queremos que se una con nada, sino que quede cada palabra junta.
+    arrayInvertido.push(arrayLetraInvertida.join("")); 
+} // Ahora lo que tengo que retornar fuera del for es el array donde pusheé, donde volví a juntar las letras en cada palabra, y ahora sí unir las palabras en un join(" ") con una separación entre cada palabra. Y así obtengo la frase completa con cada palabra invertida letra por letra. 
+return arrayInvertido.join(" ");
+}
+comoEspejo("Gallina tiene huevos")
+
+//COMO FUNCIONA SPLIT, REVERSE, JOIN EN DETALLE:
+
+var str1 = "Hola cómo estás?"
+var array = str1.split(" ")
+array       // me lo separa sin espacio ni nada así [ 'Hola', 'cómo', 'estás?' ]
+var nuevoArray = array[0].split("")  // El split va a trabajar sobre cada string (cada palabra) entonces tengo que utilizarlo sobre la posición sub cero del array (no puedo poner array.split por ejemplo). En este caso uso split con un string vacío ("") 
+nuevoArray   // Obtengo [ 'H', 'o', 'l', 'a' ] es decir, toma carácter por carácter de lo que hay en la posición sub cero y lo separa como si fueran elementos de un array nuevo.
+//El método split puede recibir un string (una cadena) o un elemento en la posición dentro de un array, pero me devuelve siempre un array, separando los elementos mediante lo que yo le pase como parámetro. Si le pongo un string vacío por defecto me separa los elementos entre sí con una coma. 
+//Luego con reverse podemos invertir esas letras, así:
+var letrasAlreves = nuevoArray.reverse();
+letrasAlreves // me devuelve [ 'a', 'l', 'o', 'H' ] pero las letras continüan separadas 
+//Entonces para volver a unirlas usamos join, así:
+letrasAlreves.join("") // El método join recibió un array con letras separadas pero me devuelve un string: devuelve 'aloH'. En el ejemplo más arriba de la función comoEspejo, para devolver la frase completa necesitamos recorrer el array con un bucle for para hacer todo este proceso con todos los elementos del array, y haceer el último paso, otra vez usar join. para volver a unir las palabras en una sola frase, sin comas entre si, por eso volvemos a usar join(" ") con un espacio. Y así es como obtengo la frase invertida palabra por palabra.
+
+
+
+
+
+
+
+
+
+
+

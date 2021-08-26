@@ -1,0 +1,395 @@
+
+objeto = {
+      D: 1,
+      B: 2,
+      C: 3
+    };
+function deObjetoAmatriz(objeto){
+  // Escribe una función que convierta un objeto en una matriz, donde cada elemento representa 
+  // un par clave-valor en forma de matriz.
+  //Ejemplo: 
+  /*objeto({
+      D: 1,
+      B: 2,
+      C: 3
+    }) ➞ [["D", 1], ["B", 2], ["C", 3]]*/
+  //Escribe tu código aquí
+array = [];
+for (var prop in objeto) {
+array.push([prop, objeto[prop]]);
+}
+  return array;
+}
+
+deObjetoAmatriz(objeto)
+
+//O bien utilizando el método Object.entries
+
+Object.entries(objeto);
+
+//==============================================================================================================================
+
+function numberOfCharacters(string) {
+  //La función recibe un string. Recorre el srting y devuelve el caracter con el número de veces que aparece 
+  //en formato par clave-valor.
+  //Ej: Recibe ---> "adsjfdsfsfjsdjfhacabcsbajda" || Devuelve ---> { a: 5, b: 2, c: 2, d: 4, f: 4, h:1, j: 4, s: 5 } 
+  //Escribe tu código aquí
+var obj = {};
+  for (var i = 0; i < string.length; i++) {
+    var count = 0;
+     if (!obj[string[i]])  {                 //le estoy indicando si no tiene eso, pase al siguiente bucle for
+        for (var j = 0; j < string.length; j++){
+          if (string[i] === string[j]) {
+            count ++;
+          }
+        }
+        obj[string[i]] = count; 
+    }
+  }
+  return obj;
+}
+numberOfCharacters("adsjfdsfsfjsdjfhacabcsbajda")
+
+//Otra forma
+function cantidadLetras(string) {
+objeto = {};
+  for (let i = 0; i < string.length; i++) {
+    if (Object.keys(objeto).includes(string[i])) {
+      objeto[string[i]] = objeto[string[i]] + 1;
+    } else {
+      objeto[string[i]] = 1;
+    }
+  }
+  return objeto;
+}
+cantidadLetras("adsjfdsfsfjsdjfhacabcsbajda")
+
+//Otra forma
+function cantidadLet(string) {
+var obj = {};
+  for (var i = 0; i < string.length; i++) {
+    if (!obj[string[i]]) {
+      obj[string[i]] = 0;
+    } obj[string[i]] = obj[string[i]] + 1;
+  }
+    return obj;
+}
+cantidadLet("marisaliapascal")
+
+//La forma más corta con un bucle for in
+function cantLet(string) {
+var obj = {};
+  for (var str in string) {
+obj[string[str]] = (obj[string[str]] || 0 ) + 1; 
+} return obj;
+}
+
+cantLet("LosSecretosdeLaMenteMillonaria")
+
+//==============================================================================================================================
+
+function capToFront(s) {
+  //Realiza una función que reciba como parámetro un string y mueva todas las letras mayúsculas
+  //al principio de la palabra.
+  //Ejemplo: soyHENRY -> HENRYsoy
+  //Escribe tu código aquí
+var may = "";
+  var min = "";
+  
+   for (var i = 0; i< s.length; i++) {
+
+      if (s[i] === s[i].toUpperCase()) {
+       may = may + s[i];
+       } else {
+       min = min + s[i];
+  }
+   }
+  return may + min;
+}
+
+capToFront("soyHENRY")
+
+//==============================================================================================================================
+
+function asAmirror(str) {
+  //La función recibe una frase. 
+  //Escribe una función que tome la frase recibida y la devuelva de modo tal que se pueda leer de izquierda a derecha 
+  //pero con cada una de sus palabras invertidas, como si fuera un espejo.
+  //Ej: Recibe ---> "The Henry Challenge is close!" || Devuelve ---> "ehT yrneH egnellahC si !esolc"
+  //Escribe tu código aquí
+  var fraseEspejo = str.split(" ").map(function (palabra) {
+    return palabra.split("").reverse().join("");
+  }) .join (" ");
+  return fraseEspejo;
+} 
+
+asAmirror("Every day in every way I am feeling happy and happy, yes!")
+asAmirror("The Henry Challenge is close!")
+
+str = "";
+function espejo (str) {
+var frase = str.split(" ").map(function (palabra) {
+return palabra.split("").reverse().join("");
+}).join(" ");
+return frase;
+}
+
+espejo("Gallina tiene huevos")
+
+//Otra forma:
+
+function comoEspejo (str) {
+var arrayInvertido = [];                          //Creamos un array donde pondremos la frase resultante
+var arrayPalabras = str.split(" ");              //Otro array donde pondremos las palabras y empiezo a utilizar los métodos, acá utilizamos el split, que lo que hace es separarme lo que yo desee dentro del string, o sea va a separar cada palabra de la frase en distintos strings
+
+  for (var i = 0; i< arrayPalabras.length; i++) {  //hacemos un for que verifica el array de palabras que acabamos de definir
+    var arrayLetra = arrayPalabras[i].split("");   // Creamos un nuevo array de letras, que tome las palabras en la primera posición y lo que va a hacer en esa posición es otro split que lo que haga es separar las letras una por una, ["T", "h", "e"]. Entonces lo siguiente que tenemos que hacer es invertirlas, por eso creamos un array de letras invertidas =>
+    var arrayLetraInvertida = arrayLetra.reverse();  // que toma las letras del array anterior y las invierte con reverse(). No hace falta que le pase ningún parámetro porque lo que hace reverse es tomar todos los elementos y darlos vuelta. Ahora lo que tengo que hacer es pushear las letras invertidas dentro del array vacío que creé arriba, y volver a unirlas para que se forme la palabra completa. Usamos join("") con un array vacío porque no queremos que se una con nada, sino que quede cada palabra junta.
+    arrayInvertido.push(arrayLetraInvertida.join("")); 
+} // Ahora lo que tengo que retornar fuera del for es el array donde pusheé, donde volví a juntar las letras en cada palabra, y ahora sí unir las palabras en un join(" ") con una separación entre cada palabra. Y así obtengo la frase completa con cada palabra invertida letra por letra. 
+return arrayInvertido.join(" ");
+}
+comoEspejo("Gallina tiene huevos")
+
+//COMO FUNCIONA SPLIT, REVERSE, JOIN EN DETALLE:
+
+var str1 = "Hola cómo estás?"
+var array = str1.split(" ")
+array       // me lo separa sin espacio ni nada así [ 'Hola', 'cómo', 'estás?' ]
+var nuevoArray = array[0].split("")  // El split va a trabajar sobre cada string (cada palabra) entonces tengo que utilizarlo sobre la posición sub cero del array (no puedo poner array.split por ejemplo). En este caso uso split con un string vacío ("") 
+nuevoArray   // Obtengo [ 'H', 'o', 'l', 'a' ] es decir, toma carácter por carácter de lo que hay en la posición sub cero y lo separa como si fueran elementos de un array nuevo.
+//El método split puede recibir un string (una cadena) o un elemento en la posición dentro de un array, pero me devuelve siempre un array, separando los elementos mediante lo que yo le pase como parámetro. Si le pongo un string vacío por defecto me separa los elementos entre sí con una coma. 
+//Luego con reverse podemos invertir esas letras, así:
+var letrasAlreves = nuevoArray.reverse();
+letrasAlreves // me devuelve [ 'a', 'l', 'o', 'H' ] pero las letras continüan separadas 
+//Entonces para volver a unirlas usamos join, así:
+letrasAlreves.join("") // El método join recibió un array con letras separadas pero me devuelve un string: devuelve 'aloH'. En el ejemplo más arriba de la función comoEspejo, para devolver la frase completa necesitamos recorrer el array con un bucle for para hacer todo este proceso con todos los elementos del array, y haceer el último paso, otra vez usar join. para volver a unir las palabras en una sola frase, sin comas entre si, por eso volvemos a usar join(" ") con un espacio. Y así es como obtengo la frase invertida palabra por palabra.
+
+//OTRA FORMA:
+//Esta es la forma menos entendible, más complicada de todas, con dos bucles for y dos condiciones if. Es mucho más fácil hacerlo únicamente con métodos.
+// //Ej: Recibe ---> "The Henry Challenge is close!" || Devuelve ---> "ehT yrneH egnellahC si !esolc"
+
+function asEspejo (str) {    
+var palabra = "" ;             
+var palabraInv = "";            
+var stringInv = "";             
+  
+  for (i= 0; i <= str.length; i++){
+if (str[i] === " " || i === str.length) { 
+palabraInv = "";                                     
+  for (var j = palabra.length - 1; j >= 0; j--){     
+palabraInv = palabraInv + palabra[j];  
+}
+palabra = "";       
+if (i === str.length){                      
+stringInv = stringInv + palabraInv;         
+} else { 
+  stringInv = stringInv + palabraInv + " ";  
+}
+} else {
+palabra = palabra + str[i];
+} 
+}
+  return stringInv;     
+}
+
+asEspejo("Está funcionando!")
+
+//LA MISMA FUNCION CON COMENTARIOS:
+function comoEspejo (str) {       //Primero voy a crear 3 contenedores que son 3 strings vacíos
+var palabra = "" ;               //el primer contenedor va a contener el espacio entre las palabras del string
+var palabraInv = "";             // va a contener la palabra ejemplo "The" pero así "ehT"
+var stringInv = "";              // va a conter el resultado "ehT yrneH egnellahC si !esolc"
+  
+  for (i= 0; i <= str.length; i++){
+if (str[i] === " " || i === str.length) { //lo primero que hacemos es crear una condición que verifique que lo nosotros recibimos como argumento en la función en la posición [i] sea igual a un espacio " " ó || que el valor de i sea igual a la longitud del string que recibió. Lo que estoy verificando acá es cuando termina cada palabra y cuando termina la frase completa. Como i === str.length no se cumplirá me va a tirar undefined, no va a entrar en esa condición entonces ya sé que termina la cadena. 
+//Entra al primer for, hace toda la verificación, itera, y dice por ejemplo T es igual a un espacio? no, no es. Pasa al or y dice "la posición sub i de T, es igual a la cantidad de los caracteres que hay en la frase (.length) ? No, no es igual. Ok, entonces seteáme lo que sería la palabra invertida. Me la setea para que yo pueda contener las letras, porque si no, se me empiezan a acumular las palabras invertidas y no sabría como separarlas. 
+palabraInv = "";                                     //Aquí seteamos la palabra invertida y va a pasar al siguiente for. 
+  for (var j = palabra.length - 1; j >= 0; j--){     //Ahora creo otro for con la palabra y lo recorro al revés. Entra en este bucle y toma el contenedor palabra y le da como valor la letra T y me lo va acumulando hasta que yo llegue hasta la separación de esa palabra. En este for hacemos una secuencia para atrás de los números del index, por eso decimos j--. Por eso empieza revisando el último elemento (palabra.length - 1), y por eso j es mayor o igual a cero para no dejar ningún elemento afuera de la verificación
+palabraInv = palabraInv + palabra[j];  //lo que estoy poniendo en este contenedor va a ser primero por ej. la letra e, h y T. 
+}
+palabra = "";       // Cuando termina de iterar seteo de nuevo porque yo quiero que el for empiece otra vez con cada palabra, por ejemplo cuando termina con la palabra The empieza con la palabra Henry.
+if (i === str.length){                      // Una vez que ya lo seteó, entra en esta condción de if, que lo va a ser es agregarlo a lo que sería la frase completa. Este if va a entrar cuando esté lista la palabra del segundo bucle for. Entra y verifica, si sos la última, no me pongas espacio, si no sos la última, ponéme un espacio. Y así va iterando.
+stringInv = stringInv + palabraInv;         
+} else { 
+  stringInv = stringInv + palabraInv + " ";  // Si no es la última palabra, que si le agregue un espacio.
+}
+} else {
+palabra = palabra + str[i];
+} 
+}
+  return stringInv;      // y al final lo que tenemos que retornar es el string invertido.
+}
+ //===========================================================================================================================
+
+function capi(numero){
+  //Escribe una función, la cual recibe un número y determina si es o no capicúa.
+  //La misma debe retornar: "Es capicua" si el número se número que se lee igual de 
+  //izquierda a derecha que de derecha a izquierda. Caso contrario retorna "No es capicua"
+  //Escribe tu código aquí
+
+var num = numero.toString();     // Primero creo una variable y va a convertir el número pasado por parámetro en una string
+var numInv;                      // aquí va a estar el número invertido para poder compararlo con el recibido
+  
+numInv = num.split("").reverse().join(""); //Separo, invierto y vuelvo a unir el número que antes convertí en string
+if (num === numInv) {              // comparo el strring numero con el string numInv
+return "Es capicua";               // Si son iguales, entonces el número es capicúa
+} 
+  return "No es capicua";          // si no son iguales, el número no es capicúa
+};
+  
+capi(45654)
+capi(2552)
+capi(180252)
+capi(700700)
+
+
+//OTRA FORMA:
+  
+  function capicua(numero){
+var str = numero.toString();
+  var array = str.split("");
+  for (var i = 0; i < array.length; i++) {
+    if (array[i] !== array[array.length - ( i + 1)]) {   //Comprobamos los dos extremos deñ arreglo porque yo tengo que comparar si por ej. dado el número 1221, 1 en la posición 0 es igual a 1 en la posición 3, y luego si 2 en la posic. 1 es igual a dos en la pos. 2
+    return "No es capicua";
+    }
+  } 
+  return "Es capicua";
+}
+
+capicua(12321)
+capicua(1111)
+capicua(105217)
+capicua(7878700)
+
+numero1 = 12345;                             // Recibo un número 12345
+numero1Acadena = numero1.toString();         // Convierto el número en un string '12345'
+var arreglo = numero1Acadena.split("");      // Creo un array y uso split para separar los elem. [ '1', '2', '3', '4', '5' ]
+arreglo                                      // Este es el arreglo que obtengo [ '1', '2', '3', '4', '5' ]
+arreglo.reverse()                            // REvertimos el arreglo
+arreglo[0]                                   // Invoco a la primera posición del arreglo (sub cero) '1'
+arreglo[arreglo.length - 1]                  // Invoco a la última posición del arreglo '5'
+for (var i = 0; i < arreglo.length; i++) {   // Acá necesito el bucle for para definir la variable i
+arreglo[arreglo.length - (1 + i )]           // Me devuelve la posición de los números desde atrás hacia adelante
+}
+arreglo.length
+
+//arreglo[arreglo.length - (i + 1 )]  por qué decimos i + 1?... veamos:
+//array.length -1 = último elemento
+// Dado [ '1', '2', '3', '2', '1' ]
+//         0    1    2    3    4    En la primera vuelta i va a valer 0 y se pregunta si el valor 1 en esa posición es       //                                 igual al valor del índice en .lenght (5) - el valor de (i (ahora 0) + 1) o sea 5 - 1 = 4
+// el valor en la posición 4 es 1, 1 es igual a 1? si. Ok, Ahora pasa a la posición 1 del index, donde ahora i vale 2. Y se pregunta si 2 es igual al valor de .length - ( el valor actual de i + 1, o sea, 1 + 1 = 2), 5 - 2 = 3. Ahora dice dos en la posición 1 del índice es igual al valor que hay en la posición 3? sí, porque hay un dos. Ok, y empieza otra vez. Ahora i está en la posición 2 y su valor es 3. Dice 3 es igual al valor que hay en la posición .length( 5) - (el valor de i que ahora es 2 + 1 = 3), 5 - 3 = 2. En la posición 2 hay un 3, 3 es igual a 3. Y ahí termina de iterar. 
+
+// OTRA FORMA QUE NO SALIO BIEN!! JAJA
+function cap(num){
+var str = num.toString();
+var arr = str.split("");
+var arrInvertido = arr.reverse();
+if (arr.join("") === arrInvertido.join("")) {
+return "Es capicua";} 
+return "No es capicua";
+}
+
+cap(12321)
+cap(1111)
+cap(7878700)
+
+numero1 = 12321;                             // Recibo un número 12345
+numero1Acadena = numero1.toString();         // Convierto el número en un string '12345'
+var arreglo = numero1Acadena.split("");      // Creo un array y uso split para separar los elem.
+arreglo                                      // Este es el arreglo que obtengo 
+arreglo.reverse()                            // Revertimos el arreglo
+// Si arreglo es igual a arreglo.reverse entonces el número es capicúa
+//===========================================================================================================================
+
+function deleteAbc(cadena){
+  //Define una función que elimine las letras "a", "b" y "c" de la cadena dada 
+  //y devuelva la versión modificada o la misma cadena, en caso de contener dichas letras.
+  //Escribe tu código aquí
+  cadena = cadena.replace("a", "");  
+  cadena = cadena.replace("b", "");
+  cadena = cadena.replace("c", "");  // tengo que declarar la variable cadena varias veces porque si no lo hace una sola 
+  return cadena;                     // vez. Si yo la declaro varias veces vuelve a hacer replace sobre lo mismo y así 
+                                     // elimina los otros caracteres. El método reemplaza la letra por un string vacío.
+}
+
+borrarAbc("abecedario")
+borrarAbc("abc")
+borrarAbc("armada")
+borrarAbc("vino")
+
+//OTRA FORMA
+function borrarAbc(cadena){
+  var array = cadena.split("");
+  for (var i = 0; i < array.length; i++) {
+    if (array[i] === "a" || array[i] === "b" || array[i] === "c") {
+      array.splice(i, 1);
+       i--;                  // i-- equivale a i - 1  lo ponemos acá cuando estamos haciendo el splice sobre el arreglo que 
+    }                         // estamos iterando estamos achicando la longitud del arreglo y la long del arreglo la estamos 
+  }                           // usando en el for para hacer las iteraciones del bucle, entonces siempre que estemos sacando
+  return array.join("");      // un elemento del arreglo vamos a restar 1 al valor de i para que haga una iteración menos.
+}
+
+// En un bucle for tenemos 3 parámetros separados por punto y coma, en una primera parte declaramos cómo se llama nuestro índice o puntero y le ponemos un valor, luego en la segunda parte establecemos la condición de corte, y luego camos incrementando nuestro índice. Ahora lo que pasa es que el incremento de índice ocurre una vez que termina de ejecutar el bloque de código que está dentro del for. Entonces cuando termine de ejecutar ese bloque de código si no le pusimos i--  v a pasar al siguiente elemento y el siguiente ya no es el siguiente sino que se estaría salteando uno más debido a que lo achicamos al array, le sacamos una posición, o sea, nos estaríamos salteando una parte y por eso no funcionaría. Por eso debemos disminuír nuestro contador, nuestro puntero de manera de que cuando haga i++ el for solito hace i++ y vuelve a empezar. Entonces si por ejemplo i vale 2, y yo saco ese elemento,y entonces el siguiente va a pasar a ser el actual, porque si yo saqué el 2 el tres va a pasar a ser el dos ahora. Es decir, que como el elemento que estaba ahora no está más, el for lo debe volver a controlar. Es decir, si esa cadena empieza con a, el splice quitará la posición en cero que ya fue revisada y normalmente el for debería pasar a la posición uno. Sin embargo, al eliminarse la posición sub cero, tiene que volver a chequear el elemento que ahora ocupa esa posición. Por eso se resta uno al final del bucle for en este ejercicio.
+
+borrarAbc("abcefgh")
+borrarAbc("abc")
+borrarAbc("plural")
+borrarAbc("limon")
+
+//===========================================================================================================================
+//ESTA FORMA NO ME PASÓ, REVISAR
+function ordenaArray(arr) {
+  //La función recibe una matriz de strings. Ordena la matriz en orden creciente de longitudes de cadena
+  //Ej: Recibe ---> ["You", "are", "beautiful", "looking"] || Devuelve ---> [“You", "are", "looking", "beautiful"]
+  //Escribe tu código aquí
+ for (var i= 0; i < arr.length; i++) {
+    for (var j = i + 1; j < arr.length; j++) {
+      if (arr[i].length > arr[j].length); {
+       var aux = arr[i];
+       arr[i] = arr[j];
+       arr[j] = aux;
+      }  
+    }
+ }
+  return arr;
+}
+
+ordenaArray(["You", "are", "beautiful", "looking"])
+ordenaArray(["pera", "manzana", "alcaucil", "papa"])
+
+//OTRA FORMA
+
+function sortArray(arr) {
+  var nuevoArray = arr.sort(function( elementoActual, elementoSiguiente) {
+    return elementoActual.length - elementoSiguiente.length
+  });
+  return nuevoArray;
+}
+
+sortArray(["You", "are", "beautiful", "looking"])
+sortArray(["pera", "manzana", "alcaucil", "papa"])
+
+//===========================================================================================================================
+
+function buscoInterseccion(arreglo1, arreglo2){
+  //Existen dos arrays, cada uno con 5 números. A partir de ello, escribir una función que permita 
+  //retornar un nuevo array con la intersección de ambos elementos. (Ej: [4,2,3] unión [1,3,4] = [3,4].
+  //Si no tienen elementos en común, retornar un arreglo vacío.
+  //Aclaración: los arreglos no necesariamente tienen la misma longitud
+  //Escribe tu código aquí  
+  var nuevoArr = [];
+  for ( var i = 0; i < arreglo1.length; i++) {
+    for ( var j = 0; j < arreglo2.length; j++) {
+      if (arreglo1[i] === arreglo2[j]) {
+        nuevoArr.push(arreglo1[i]);
+      }
+    }
+  }
+  return nuevoArr; 
+}
+
+buscoInterseccion([1, 2 , 3], [1, 5, 8 , 3])
+buscoInterseccion([7 , 23, 4], [23, 70])
+buscoInterseccion([1, 20 , 3], [22, 5, 7])
+

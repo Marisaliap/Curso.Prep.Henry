@@ -1,0 +1,103 @@
+
+// FUNCION FLECHA 
+
+//Una expresión de función flecha es una alternativa compacta a una expresión de función tradicional, pero es limitada y no se //puede utilizar en todas las situaciones.
+
+//Diferencias y limitaciones:
+//No tiene sus propios enlaces a this o super y no se debe usar como métodos.
+//No tiene argumentos o palabras clave new.target.
+//No apta para los métodos call, apply y bind, que generalmente se basan en establecer un ámbito o alcance
+//No se puede utilizar como constructor.
+//No se puede utilizar yield dentro de su cuerpo.
+
+//EJEMPLO DE EJERCICIO:
+//Filtrar todos los elementos del array que comiencen con la letra "a".
+//Devolver un nuevo array con los elementos que cumplen la condición.
+
+// El mismo ejercicio resuelto de tres maneras diferentes, el primero con el bucle for:
+
+function filter(array) {
+  var nuevoArray = [];
+  for (var el = 0; el < array.length; el++) 
+  {
+    if (array[el][0] === "a") {
+    nuevoArray.push (array[el])
+  }
+  }
+  return nuevoArray;  
+}
+
+//Con el método filter y la función flecha:
+
+function filtrar(array) {  
+  var resultado = array.filter(array => array[0] === "a");
+  return resultado;  
+}
+
+// Con el método filter y sin la función flecha:
+
+function filtro(array) {
+  var nuevoArray = array.filter (function(elemento) { 
+    if (elemento[0] === "a") {
+      return elemento;
+    } 
+  } ) 
+  return nuevoArray; 
+}
+
+//EJEMPLO
+
+var materials = [
+  'Hydrogen',
+  'Helium',
+  'Lithium',
+  'Beryllium'
+];
+console.log(materials.map(material => material.length));
+
+
+//Comparación de funciones tradicionales con funciones flecha
+//Observa, paso a paso, la descomposición de una "función tradicional" hasta la "función flecha" más simple:
+//Nota: Cada paso a lo largo del camino es una "función flecha" válida
+
+// Función tradicional
+function nombre (a) {return a + 100;
+}
+// Desglose de la función flecha
+
+// 1. Elimina la palabra "function" y coloca la flecha entre el argumento y el corchete de apertura.
+(a) => {return a + 100;
+}
+
+// 2. Quita los corchetes del cuerpo y la palabra "return" — el return está implícito.
+(a) => a + 100;
+
+// 3. Suprime los paréntesis de los argumentos
+a => a + 100;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
